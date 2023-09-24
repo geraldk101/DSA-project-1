@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Faculty API
+  version: 1.0.0
+paths:
+  /lecturers:
+    get:
+      summary: Retrieve a list of all lecturers
+      responses:
+        '200':
+          description: A list of lecturers
+    post:
+      summary: Add a new lecturer
+      requestBody:
+        description: New lecturer details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lecturer'
+      responses:
+        '201':
+          description: Lecturer created successfully
+  /lecturers/{staffNumber}:
+    get:
+      summary: Retrieve details of a specific lecturer by staff number
+      parameters:
+        - name: staffNumber
+          in: path
+          required: true
+          description: Staff number of the lecturer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lecturer details
+        '404':
+          description: Lecturer not found
+    put:
+      summary: Update an existing lecturer's information
+      parameters:
+        - name: staffNumber
+          in: path
+          required: true
+          description: Staff number of the lecturer
+          schema:
+            type: string
+      requestBody:
+        description: Updated lecturer details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lecturer'
+      responses:
+        '200':
+          description: Lecturer updated successfully
+        '404':
+          description: Lecturer not found
+    delete:
+      summary: Delete a lecturer's record by staff number
+      parameters:
+        - name: staffNumber
+          in: path
+          required: true
+          description: Staff number of the lecturer
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Lecturer deleted successfully
+components:
+  schemas:
+    Lecturer:
+      type: object
+      properties:
+        staffNumber:
+          type: string
+          description: Staff number of the lecturer
+        officeNumber:
+          type: string
+          description: Office number of the lecturer
+        staffName:
+          type: string
+          description: Name of the lecturer
+        title:
+          type: string
+          description: Title of the lecturer
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              courseName:
+                type: string
+                description: Name of the course
+              courseCode:
+                type: string
+                description: Course code
+              nqfLevel:
+                type: integer
+                description: NQF level of the course
